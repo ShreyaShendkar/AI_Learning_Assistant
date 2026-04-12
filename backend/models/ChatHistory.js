@@ -1,0 +1,43 @@
+import mongoose, { mongo } from "mongoose";
+
+const chatHistorySchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  documentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Document',
+    reuired: true
+  },
+  message: [{
+    role: {
+      type: String,
+      enum: ['user','assitant'],
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    },
+    relevantChunks: {
+      type: [Number],
+      default: []
+    }
+  }]
+}, {
+  timestamps: true
+});
+
+// Indexing for faster queries
+
+chatHistorySchema.index({ userId: 1, documentId: 1});
+
+const ChatHistory = mongoose.model('ChatHistory' , chatHistorySchema);
+
+export default ChatHistory;
