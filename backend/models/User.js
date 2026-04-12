@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
 
+console.log("✅ NEW USER MODEL LOADED");
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -31,14 +32,20 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
+  try {
   if (!this.isModified('password')) {
-    return next();
+    console.log("Heyy1");
+    return ;
   }
-
+console.log("Heyy2");
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
+  
+ } catch(error) {
+  console.error("Error in pre-save middleware:", error);
+  throw error;
+ }
 });
 
 // Compare password method
