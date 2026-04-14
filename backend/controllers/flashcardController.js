@@ -160,7 +160,7 @@ export const deleteFlashcardSet = async (req, res, next) => {
 
      res.status(200).json({
       success: true,
-      message: 'Flasdcard set deleted successfully'
+      message: 'Flashcard set deleted successfully'
      });
   } catch (error) {
     next(error);
