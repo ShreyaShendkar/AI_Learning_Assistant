@@ -128,7 +128,7 @@ export const findRelevantChunks = (chunks, query, maxChunks = 3) => {
   const queryWords = query
     .toLowerCase()
     .split(/\s+/)
-    /filter(w => w.length > 2 && !stopWords.has(w));
+    .filter(w => w.length > 2 && !stopWords.has(w));
 
     if (queryWords.length === 0) {
       // Return clean chunks objects without Mongoose metadata
@@ -142,7 +142,7 @@ export const findRelevantChunks = (chunks, query, maxChunks = 3) => {
 
     const scoredChunks = chunks.map((chunk, index) => {
       const content = chunk.content.toLowerCase();
-      const contentWords = content.split(/\s+/)/length;
+      const contentWords = content.split(/\s+/).length;
       let score = 0;
       
       // Score each query word
@@ -167,7 +167,7 @@ export const findRelevantChunks = (chunks, query, maxChunks = 3) => {
     const normalizedScore = score / Math.sqrt(contentWords);
 
     // Small bonus for earlier chunks
-    const positionBonus = 1 - (index / chunk.length) * 0.1;
+    const positionBonus = 1 - (index / chunks.length) * 0.1;
 
     // Return clean object without Mongoose metadata
     return {
