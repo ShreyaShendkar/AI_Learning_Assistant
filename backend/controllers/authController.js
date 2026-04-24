@@ -17,7 +17,9 @@ export const register = async (req, res, next) => {
     const { username, email, password } = req.body;
 
     // check if user exists
-    const userExists = await User.findOne({ $or: [{email}] });
+    const userExists = await User.findOne({ 
+      $or: [{ email }, { username }]
+    });
 
     if(userExists) {
       return res.status(400).json({
@@ -80,7 +82,7 @@ export const login = async (req, res, next) => {
 
     // Check for user (include password for comparison)
     const user = await User.findOne({email}).select("+password");
-
+    console.log("User found:", user);
     if(!user) {
       return res.status(401).json({
         success: false,
@@ -89,8 +91,12 @@ export const login = async (req, res, next) => {
       });
     }
 
+    console.log("Entered:", password);
+    console.log("Hash:", user.password);
     // Check password
     const isMatch = await user.matchPassword(password);
+
+    console.log("Match:", isMatch);
 
     if(!isMatch) {
       return res.status(401).json({
