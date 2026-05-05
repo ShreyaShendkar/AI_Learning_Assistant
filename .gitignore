@@ -55,3 +55,5 @@ node_modules/.vite/
 .env.test.local
 .env.production.local
 backend/test.js
+
+uploads/
