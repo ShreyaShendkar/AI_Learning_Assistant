@@ -59,16 +59,16 @@ const QuizManager = ({documentId}) => {
   };
 
   const handleConfirmDelete = async () => {
-    if (!setToDelete) return;
+    if (!selectedQuiz) return;
     setDeleting(true);
     try {
-      await flashcardService.deleteFlashcardSet(setToDelete._id);
-      toast.success("Flashcard set deleted successfully!");
+      await quizService.deleteQuiz(selectedQuiz._id);
+      toast.success(`'${selectedQuiz.title || 'Quiz'}' deleted.`);
       setIsDeleteModalOpen(false);
       setSetToDelete(null);
-      fetchFlashcardSets();
+      setQuizzes(quizzes.filter(q => q._id !== selectedQuiz._id));
     } catch (error) {
-      toast.error(error.message || "Failed to delete flashcard set.");
+      toast.error(error.message || "Failed to delete quiz.");
     } finally {
       setDeleting(false);
     }
@@ -146,37 +146,32 @@ const QuizManager = ({documentId}) => {
           </Modal> 
 
           
-    {/* Delete Confirmation Modal */}
+    {/* Delete Confirmation */}
     <Modal
      isOpen={isDeleteModalOpen}
      onClose={() => setIsDeleteModalOpen(false)}
      title="Confirm Delete Quiz"
      >
-      <div className='space-y-6'>
-        <p className='text-sm text-slate-600'>
-          Are you sure you want to delete the quiz: <span className=''>{selectedQuiz?.title || 'this.quiz'}</span>.This action cannot be undone.
+      <div className='space-y-4'>
+        <p className='text-sm text-neutral-600'>
+          Are you sure you want to delete the quiz: <span className='font-semibold text-neutral-900'>{selectedQuiz?.title || 'this.quiz'}</span>.This action cannot be undone.
         </p>
-        <div className='flex items-center justify-end gap-3 pt-2'>
-          <button
+        <div className='flex justify-end gap-2 pt-2'>
+          <Button
             type="button"
+            variant='outline'
             onClick={() => setIsDeleteModalOpen(false)}
             disabled={deleting}
-            variant='outline'>
+            >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleConfirmDelete}
               disabled={deleting}
-              className='px-5 h-11 bg-linear-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-rose-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100'>
-                {deleting ? (
-                  <span className='flex items-center gap-2'>
-                    <div className='w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin' />
-                    Deleting...
-                  </span>
-                ) : (
-                  "Delete Set"
-                )}
-              </button>
+              className='bg-red-500 hover:bg-red-600 active:bg-red-700 focus:ring-red-500'>
+                {deleting ? 'Deleting...' : 'Delete'}
+                 
+              </Button>
         </div>
       </div>
      </Modal>

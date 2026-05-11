@@ -49,7 +49,7 @@ const QuizCard = ({quiz, onDelete}) => {
         </div>
       </div>
 
-      {/* Active Button */}
+      {/* Action Button */}
       <div className='mt-2 pt-4 border-t border-slate-100'>
         {quiz?.userAnswers?.length > 0 ? (
           <Link to={`/quizzes/${quiz._id}/results`}>

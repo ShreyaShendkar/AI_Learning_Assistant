@@ -349,7 +349,7 @@ const FlashcardManager = ({documentId}) => {
             type="button"
             onClick={() => setIsDeleteModalOpen(false)}
             disabled={deleting}
-            className='h-11 px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-white text-sm font-medium rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'>
+            className='h-11 px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'>
               Cancel
             </button>
             <button
