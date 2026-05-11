@@ -228,13 +228,13 @@ export const chat = async (req, res, next) => {
       {
         role: 'user',
         content: question,
-        timestamps: new Date(),
+        timestamp: new Date(),
         relevantChunks: []
       },
       {
         role: 'assistant',
         content: answer,
-        timestamps: new Date(),
+        timestamp: new Date(),
         relevantChunks: chunkIndices
       }
      );
@@ -312,12 +312,12 @@ export const explainConcept = async (req, res, next) => {
 };
 
 // @desc  Get chat history for a document
-// @route POST/api/ai/chat-history/:documentId
+// @route GET/api/ai/chat-history/:documentId
 // @access Private
 
 export const getChatHistory = async (req, res, next) => {
   try {
-     const { documentId } = req.body;
+     const { documentId } = req.params;
 
      if(!documentId) {
       return res.status(400).json({
@@ -330,7 +330,7 @@ export const getChatHistory = async (req, res, next) => {
      const chatHistory = await ChatHistory.findOne({
       userId: req.user._id,
       documentId: documentId
-     }).select('messages'); // Only retrieve the messages array
+     }).select('message'); // Only retrieve the messages array
 
      if(!chatHistory) {
       return res.status(200).json({
@@ -343,7 +343,7 @@ export const getChatHistory = async (req, res, next) => {
     
      res.status(200).json({
       success: true,
-      data: chatHistory.messages,
+      data: chatHistory.message,
       message: 'Chat history retrieved successfully'
      });
 

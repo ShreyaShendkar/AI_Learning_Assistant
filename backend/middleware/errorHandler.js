@@ -38,7 +38,7 @@ const errorHandler = (err, req, res, next) => {
     statusCode = 401;
   }
 
-  console.error(statusCode);
+  console.error(`${statusCode}: ${message}`);
   return res.status(statusCode).json({
     success: false,
     error: message,

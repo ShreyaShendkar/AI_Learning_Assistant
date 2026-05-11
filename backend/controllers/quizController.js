@@ -59,7 +59,7 @@ export const getQuizById = async (req, res, next) => {
 // @access Private
 export const submitQuiz = async (req, res, next) => {
   try {
-    const { answers } = req.body;
+    const { answers } = req.body || {};
 
     if (!Array.isArray(answers)) {
       return res.status(400).json({
@@ -86,6 +86,14 @@ export const submitQuiz = async (req, res, next) => {
       return res.status(400).json({
         success: false,
         error: 'Quiz already completed',
+        statusCode: 400
+      });
+    }
+
+    if (answers.length !== quiz.questions.length) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please answer all questions before submitting',
         statusCode: 400
       });
     }
@@ -187,7 +195,7 @@ export const getQuizResults = async (req, res, next) => {
       data: {
         quiz: {
           id: quiz._id,
-          title: quiz.titlw,
+          title: quiz.title,
           document: quiz.documentId,
           score: quiz.score,
           totalQuestions: quiz.totalQuestions,

@@ -24,7 +24,8 @@ const submitQuiz = async (quizId, answers) => {
      const response = await axiosInstance.post(API_PATHS.QUIZZES.SUBMIT_QUIZ(quizId), {answers});
      return response.data;
    } catch (error) {
-    throw error.response?.data || { message: 'Failed to submit quiz' };
+    const message = error.response?.data?.error || error.response?.data?.message || 'Failed to submit quiz';
+    throw { message };
    }
 };
 

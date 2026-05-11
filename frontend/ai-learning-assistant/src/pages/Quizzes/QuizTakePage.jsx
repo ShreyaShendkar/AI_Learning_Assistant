@@ -20,6 +20,11 @@ const QuizTakePage = () => {
     const fetchQuiz = async () => {
       try {
         const response = await quizService.getQuizById(quizId);
+        if (response.data?.completedAt || response.data?.userAnswers?.length > 0) {
+          navigate(`/quizzes/${quizId}/results`, { replace: true });
+          return;
+        }
+
         setQuiz(response.data);
       } catch (error) {
         toast.error('Failed to fetch quiz.');
@@ -30,7 +35,7 @@ const QuizTakePage = () => {
     };
 
     fetchQuiz();
-  }, [quizId]);
+  }, [quizId, navigate]);
 
   const handleOptionChange = (questionId, optionIndex) => {
     setSelectedAnswers((prev) => ({
@@ -52,6 +57,11 @@ const QuizTakePage = () => {
   };
 
   const handleSubmitQuiz = async () => {
+    if (Object.keys(selectedAnswers).length !== quiz.questions.length) {
+      toast.error('Please answer all questions before submitting.');
+      return;
+    }
+
     setSubmitting(true);
     try {
       const formattedAnswers = Object.keys(selectedAnswers).map(questionId => {

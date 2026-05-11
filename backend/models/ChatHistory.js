@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const chatHistorySchema = new mongoose.Schema({
   userId: {
@@ -9,7 +9,7 @@ const chatHistorySchema = new mongoose.Schema({
   documentId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Document',
-    reuired: true
+    required: true
   },
   message: [{
     role: {

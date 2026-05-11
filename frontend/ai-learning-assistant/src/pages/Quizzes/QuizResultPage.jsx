@@ -133,7 +133,7 @@ const QuizResultPage = () => {
       </div>
 
       {detailedResults.map((result, index) => {
-        const userAnswerIndex = result.options.findIndex(opt => opt === result.selectedAnswers);
+        const userAnswerIndex = result.options.findIndex(opt => opt === result.selectedAnswer);
         const correctAnswerIndex = result.correctAnswer.startsWith('0')
          ? parseInt(result.correctAnswer.substring(-1)) - 1
          : result.options.findIndex(opt => opt === result.correctAnswer);
