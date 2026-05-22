@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from "../models/User.js";
-// 45:00
+
 // Generate JWT token
 const generateToken = (id) => {
   return jwt.sign({id} , process.env.JWT_SECRET, {
@@ -91,12 +91,12 @@ export const login = async (req, res, next) => {
       });
     }
 
-    console.log("Entered:", password);
-    console.log("Hash:", user.password);
+    // console.log("Entered:", password);
+    // console.log("Hash:", user.password);
     // Check password
     const isMatch = await user.matchPassword(password);
 
-    console.log("Match:", isMatch);
+    // console.log("Match:", isMatch);
 
     if(!isMatch) {
       return res.status(401).json({

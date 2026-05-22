@@ -15,6 +15,7 @@ const login = async (email, password) => {
 
 const register = async (username, email, password) => {
    try {
+   // console.log(API_PATHS.AUTH.REGISTER);
      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
       username,
       email,

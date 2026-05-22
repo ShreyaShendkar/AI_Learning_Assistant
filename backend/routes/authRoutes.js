@@ -8,6 +8,7 @@ import {
   changePassword
 } from '../controllers/authController.js';
 import protect from '../middleware/auth.js';
+import validate from '../middleware/validate.js';
 
 const router = express.Router();
 
@@ -37,8 +38,8 @@ const loginValidation = [
 ];
 
 // Public routes
-router.post('/register', registerValidation, register);
-router.post('/login', loginValidation, login);
+router.post('/register', registerValidation, validate, register);
+router.post('/login', loginValidation, validate, login);
 
 // Protected routes
 router.get('/profile', protect, getProfile);

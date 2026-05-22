@@ -28,8 +28,17 @@ const RegisterPage = () => {
       toast.success("Registration in successfully! Please Login");
       navigate("/login");
     } catch (err) {
-      setError(err.message || "Failed to register. Please try again.");
-      toast.error(err.message || "Failed to register.");
+      if (err.errors && err.errors.length > 0) {
+        setError(err.errors[0].msg);
+
+        toast.error(err.errors[0].msg);
+      } else {
+        const message = err.error || "Failed to register";
+
+        setError(message);
+
+        toast.error(message);
+      }
     } finally {
       setLoading(false);
     }
@@ -195,7 +204,7 @@ const RegisterPage = () => {
         </p>
       </div>
     </div>
-  )
+  );
 };
 
 export default RegisterPage;

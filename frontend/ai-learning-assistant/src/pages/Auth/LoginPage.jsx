@@ -6,8 +6,8 @@ import { BrainCircuit, Mail, Lock, ArrowRight} from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('nn');
-  const [password, setPassword] = useState('nn');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState(null)
@@ -25,8 +25,17 @@ const LoginPage = () => {
       toast.success('Logged in successfully!');
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Failed to login. Please check your credentails.');
-      toast.error(err.message || 'Failed to login.');
+       if (err.errors && err.errors.length > 0) {
+        setError(err.errors[0].msg);
+
+        toast.error(err.errors[0].msg);
+      } else {
+        const message = err.error || "Failed to register";
+
+        setError(message);
+
+        toast.error(message);
+      }
     } finally {
       setLoading(false);
     }
