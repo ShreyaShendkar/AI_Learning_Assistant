@@ -16,7 +16,7 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
       .replace(/\r\n/g, '\n')
       .replace(/\s+/g, ' ')
       .replace(/\n /g, '\n')
-      .replace(/ \n/g, '/n')
+      .replace(/ \n/g, '\n')
       .trim();
 
   // try to split by paragraphs (single or double newlines)
