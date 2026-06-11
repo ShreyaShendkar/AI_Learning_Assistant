@@ -39,7 +39,7 @@ const QuizManager = ({documentId}) => {
  }, [documentId]);
 
   const handleGenerateQuiz = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // stops browser refresh
     setGenerating(true);
     try {
       await aiService.generateQuiz(documentId, { numQuestions });
@@ -65,7 +65,7 @@ const QuizManager = ({documentId}) => {
       await quizService.deleteQuiz(selectedQuiz._id);
       toast.success(`'${selectedQuiz.title || 'Quiz'}' deleted.`);
       setIsDeleteModalOpen(false);
-      setSetToDelete(null);
+      setSelectedQuiz(null);
       setQuizzes(quizzes.filter(q => q._id !== selectedQuiz._id));
     } catch (error) {
       toast.error(error.message || "Failed to delete quiz.");
