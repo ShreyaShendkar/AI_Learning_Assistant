@@ -310,17 +310,4 @@ npm run preview # Preview production build
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-## 👩‍💻 Author
-
-**Shreya Shendkar**
-- GitHub: [@ShreyaShendkar](https://github.com/ShreyaShendkar)
-
----
-
 > Built with ❤️ using Node.js, React, MongoDB, and Google Gemini AI
